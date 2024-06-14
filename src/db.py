@@ -5,7 +5,7 @@ import psycopg2
 def connection():
     # Создаем базу данных
     try:
-        conn = psycopg2.connect(user="postgres", password=7856)
+        conn = psycopg2.connect(user="postgres", password=1234)
         with conn.cursor() as cursor:
             conn.autocommit = True
             cursor.execute("CREATE DATABASE vacancies_hh")
@@ -18,7 +18,7 @@ def connection():
             host='localhost',
             database='vacancies_hh',
             user='postgres',
-            password='7856'
+            password='1234'
     ) as conn:
         with conn.cursor() as cur:
             try:
@@ -39,7 +39,7 @@ def connection():
             host='localhost',
             database='vacancies_hh',
             user='postgres',
-            password='7856'
+            password='1234'
     ) as conn:
         with conn.cursor() as cur:
             try:
@@ -47,13 +47,10 @@ def connection():
                     vacancies = json.load(file)
                     for vacancy in vacancies:
                         cur.execute(
-                            'INSERT INTO vacancy_hh ('
-                            'company, title, '
-                            'url_vacancy, '
-                            'salary_from, '
-                            'salary_to, '
-                            'description, requirement) '
-                            'VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                            'INSERT INTO vacancy_hh (company, title,'
+                            ' url_vacancy, salary_from, salary_to, '
+                            'description, requirement) VALUES'
+                            ' (%s, %s, %s, %s, %s, %s, %s)',
                             (vacancy.get('company'),
                              vacancy.get('title'),
                              vacancy.get('url_vacancy'),
@@ -61,6 +58,5 @@ def connection():
                              vacancy.get('salary_to'),
                              vacancy.get('description'),
                              vacancy.get('requirement')))
-
             except Exception:
                 pass
